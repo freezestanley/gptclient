@@ -62,6 +62,7 @@
 .editor {
     padding: 10px 0px;
     width: 100%;
+    border: 1px solid #ddd;
 }
 .code,
 .output {

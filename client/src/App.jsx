@@ -35,6 +35,48 @@ const App = () => {
           .catch((err) => console.error(err));
   };
 
+  const mockSubmit = () => {
+    // 👇🏻 打开 loading
+    setLoading(true);
+    fetch("http://localhost:4000/mock", {
+        method: "POST",
+        body: JSON.stringify({
+            value,
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            // 👇🏻 关闭 loading
+            setLoading(false);
+            setOutput(data.response.trim());
+        })
+        .catch((err) => console.error(err));
+};
+
+const commentSubmit = () => {
+    // 👇🏻 打开 loading
+    setLoading(true);
+    fetch("http://localhost:4000/comments", {
+        method: "POST",
+        body: JSON.stringify({
+            value,
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            // 👇🏻 关闭 loading
+            setLoading(false);
+            setOutput(data.response.trim());
+        })
+        .catch((err) => console.error(err));
+};
+
     return (
         <main className='app'>
             <header className='header__container'>
@@ -42,7 +84,13 @@ const App = () => {
                     <h3>JSON</h3>
                     <div className='header__right'>
                         <button className='runBtn' onClick={handleSubmit}>
-                          运行
+                          生成typescript类型声明
+                        </button>
+                        <button className='runBtn' onClick={mockSubmit}>
+                          mock
+                        </button>
+                        <button className='runBtn' onClick={commentSubmit}>
+                          comments
                         </button>
                         <Delete setValue={ setValue } />
                     </div>
@@ -68,7 +116,17 @@ const App = () => {
                         value={value}
                         onChange={(value) => setValue(value)}
                     />
+                    {/* <Editor
+                        height='45vh'
+                        className='editor'
+                        // defaultLanguage='json'
+                        defaultLanguage='typescript'
+                        defaultValue='{ }'
+                        value={value}
+                        onChange={(value) => setValue(value)}
+                    /> */}
                 </div>
+                
                 <div className='output'>
                   {loading ? (
                       <Loading />
