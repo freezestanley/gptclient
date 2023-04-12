@@ -35,6 +35,52 @@ const App = () => {
             })
             .catch((err) => console.error(err));
     };
+
+    const submitchat = () => {
+        // 👇🏻 打开
+    //     setLoading(true);
+    //     fetch(`https://api.openai.com/v1/chat/completions`, {
+    //   //   fetch(`http://localhost:3000/.netlify/functions/server/mock`, {
+    //         method: "POST",
+    //         body: {
+    //             "model": "gpt-3.5-turbo",
+    //             "messages": [{"role": "user", "content": "Say this is a test!"}],
+    //             "temperature": 0.7
+    //         },
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "Authorization": "Bearer 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"
+    //         },
+    //     })
+    //         .then((res) => res.json())
+    //         .then((data) => {
+    //             // 👇🏻 关闭 loading
+    //             setLoading(false);
+    //             setOutput(data.response.trim());
+    //         })
+    //         .catch((err) => console.error(err));
+
+        // 👇🏻 打开 loading
+            setLoading(true);
+            fetch(`https://jade-selkie-f2e395.netlify.app/convert`, {
+            //   fetch(`http://localhost:3000/.netlify/functions/server/mock`, {
+                method: "POST",
+                body: JSON.stringify({
+                    value,
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+          .then((res) => res.json())
+          .then((data) => {
+              // 👇🏻 关闭 loading
+              setLoading(false);
+              setOutput(data.response.trim());
+          })
+          .catch((err) => console.error(err));
+    };
+
     const handleSubmit = () => {
       // 👇🏻 打开 loading
       setLoading(true);
@@ -108,7 +154,9 @@ const commentSubmit = () => {
                         <button className='runBtn' onClick={testSubmit}>
                           testSubmit
                         </button>
-
+                        <button className='runBtn' onClick={submitchat}>
+                          submitchat
+                        </button>
                         <button className='runBtn' onClick={handleSubmit}>
                           生成typescript类型声明
                         </button>
