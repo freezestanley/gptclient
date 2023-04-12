@@ -5,7 +5,7 @@ import Loading from './Loading'
 import Editor from "@monaco-editor/react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-
+const baseUrl = 'https://jade-selkie-f2e395.netlify.app/.netlify/functions/server'
 
 const App = () => {
     const [value, setValue] = useState("");
@@ -14,10 +14,32 @@ const App = () => {
 
     const copyToClipBoard = () => alert(`已复制 ✅`);
     
+    const testSubmit = () => {
+        // 👇🏻 打开
+        setLoading(true);
+        fetch(`${baseUrl}/test`, {
+      //   fetch(`http://localhost:3000/.netlify/functions/server/mock`, {
+            method: "POST",
+            body: JSON.stringify({
+                value,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                // 👇🏻 关闭 loading
+                setLoading(false);
+                setOutput(data.response.trim());
+            })
+            .catch((err) => console.error(err));
+    };
     const handleSubmit = () => {
       // 👇🏻 打开 loading
       setLoading(true);
-      fetch("http://localhost:4000/convert", {
+      fetch(`${baseUrl}/convert`, {
+    //   fetch(`http://localhost:3000/.netlify/functions/server/mock`, {
           method: "POST",
           body: JSON.stringify({
               value,
@@ -38,7 +60,7 @@ const App = () => {
   const mockSubmit = () => {
     // 👇🏻 打开 loading
     setLoading(true);
-    fetch("http://localhost:4000/mock", {
+    fetch(`${baseUrl}/mock`, {
         method: "POST",
         body: JSON.stringify({
             value,
@@ -59,7 +81,7 @@ const App = () => {
 const commentSubmit = () => {
     // 👇🏻 打开 loading
     setLoading(true);
-    fetch("http://localhost:4000/comments", {
+    fetch(`${baseUrl}/comments`, {
         method: "POST",
         body: JSON.stringify({
             value,
@@ -83,6 +105,10 @@ const commentSubmit = () => {
                 <div className='header'>
                     <h3>JSON</h3>
                     <div className='header__right'>
+                        <button className='runBtn' onClick={testSubmit}>
+                          testSubmit
+                        </button>
+
                         <button className='runBtn' onClick={handleSubmit}>
                           生成typescript类型声明
                         </button>
