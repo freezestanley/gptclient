@@ -61,25 +61,42 @@ const App = () => {
     //         .catch((err) => console.error(err));
 
         // 👇🏻 打开 loading
-            setLoading(true);
-            fetch(`https://jade-selkie-f2e395.netlify.app/cv`, {
-            //   fetch(`http://localhost:3000/.netlify/functions/server/mock`, {
-                method: "POST",
-                body: JSON.stringify({
-                    value,
-                }),
-                headers: {
-                    "Content-Type": "application/json",
-                },
+        //     setLoading(true);
+        //     // fetch(`https://jade-selkie-f2e395.netlify.app/cv`, {
+        //     fetch(`http://localhost:3000/.netlify/functions/server/test`, {
+        //         method: "POST",
+        //         body: JSON.stringify({
+        //             value,
+        //         }),
+        //         headers: {
+        //             "Content-Type": "application/json",
+        //         },
+        //     })
+        //   .then((res) => res.json())
+        //   .then((data) => {
+        //       // 👇🏻 关闭 loading
+        //       setLoading(false);
+        //       setOutput(data.response.trim());
+        //   })
+        //   .catch((err) => console.error(err));
+        setLoading(true);
+        // fetch(`${baseUrl}/convert`, {
+          fetch(`http://localhost:3000/.netlify/functions/server/convert`, {
+            method: "POST",
+            body: JSON.stringify({
+                value,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                // 👇🏻 关闭 loading
+                setLoading(false);
+                setOutput(data.response.trim());
             })
-          .then((res) => res.json())
-          .then((data) => {
-              // 👇🏻 关闭 loading
-              setLoading(false);
-              setOutput(data.response.trim());
-          })
-          .catch((err) => console.error(err));
-
+            .catch((err) => console.error(err));
         
     };
 
