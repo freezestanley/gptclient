@@ -62,7 +62,7 @@ const App = () => {
 
         // 👇🏻 打开 loading
             setLoading(true);
-            fetch(`https://jade-selkie-f2e395.netlify.app/convert`, {
+            fetch(`https://jade-selkie-f2e395.netlify.app/cv`, {
             //   fetch(`http://localhost:3000/.netlify/functions/server/mock`, {
                 method: "POST",
                 body: JSON.stringify({
@@ -79,6 +79,8 @@ const App = () => {
               setOutput(data.response.trim());
           })
           .catch((err) => console.error(err));
+
+        
     };
 
     const handleSubmit = () => {
